@@ -1,12 +1,13 @@
 "use client";
 
-import { BookOpen, Droplets, Apple, Dumbbell, Sparkles, Star, Loader2, Plus, Minus, Heart, Zap, Music, Smile, Coffee, Sun, Moon, BookMarked } from "lucide-react";
+import { BookOpen, Droplets, Apple, Dumbbell, Sparkles, Star, Loader2, Plus, Minus, Heart, Zap, Music, Smile, Coffee, Sun, Moon, BookMarked, ListChecks, Focus, Move, PenLine, Brain } from "lucide-react";
 import { useMetas, useDailyChecks } from "@/lib/hooks/useMetas";
 import { cn } from "@/lib/utils/cn";
 import type { Meta } from "@/types";
 
 const ICON_MAP: Record<string, React.ElementType> = {
   BookOpen, Droplets, Apple, Dumbbell, Sparkles, Star, Heart, Zap, Music, Smile, Coffee, Sun, Moon, BookMarked,
+  ListChecks, Focus, Move, PenLine, Brain,
 };
 
 interface MetaItemProps {
@@ -145,7 +146,7 @@ export function DailyChecklist({ date, compact }: DailyChecklistProps) {
             className="h-full rounded-full transition-all duration-500"
             style={{
               width: `${metas.length ? (done / metas.length) * 100 : 0}%`,
-              backgroundColor: "#8B5CF6",
+              backgroundColor: "#DAA38F",
             }}
           />
         </div>

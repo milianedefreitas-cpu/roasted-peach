@@ -36,27 +36,27 @@ function NavItem({ href, label, icon: Icon }: { href: string; label: string; ico
       href={href}
       className={cn(
         "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all",
-        active ? "bg-purple-50 text-purple-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+        active ? "bg-[#DAA38F] text-[#2F2925]" : "text-[#EAF2EE] hover:bg-[#3D5751] hover:text-white"
       )}
     >
       <Icon size={18} strokeWidth={active ? 2.5 : 1.75} />
       {label}
-      {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-600" />}
+      {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FED8A6]" />}
     </Link>
   );
 }
 
 export function Sidebar() {
   return (
-    <aside className="fixed top-0 left-0 bottom-0 w-60 bg-white border-r border-gray-100 flex flex-col z-40 shadow-sm">
-      <div className="px-6 py-7 border-b border-gray-100">
+    <aside className="fixed top-0 left-0 bottom-0 w-60 bg-[#30443F] border-r border-[#3D5751] flex flex-col z-40 shadow-sm">
+      <div className="px-6 py-7 border-b border-[#3D5751]">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-sm">
             <Sparkles size={18} className="text-white" />
           </div>
           <div>
-            <p className="text-sm font-bold text-gray-900">Planner</p>
-            <p className="text-xs text-gray-400">da Amanda</p>
+            <p className="text-sm font-bold text-white">Roasted Peach</p>
+            <p className="text-xs text-[#9DB4AC]">planner pessoal</p>
           </div>
         </div>
       </div>
@@ -67,21 +67,21 @@ export function Sidebar() {
         </div>
 
         <div>
-          <p className="px-3.5 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Pessoal</p>
+          <p className="px-3.5 text-[10px] font-semibold text-[#9DB4AC] uppercase tracking-widest mb-1">Pessoal</p>
           <div className="space-y-1">
             {PESSOAL_ITEMS.map((item) => <NavItem key={item.href} {...item} />)}
           </div>
         </div>
 
         <div>
-          <p className="px-3.5 text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-1">Profissional</p>
+          <p className="px-3.5 text-[10px] font-semibold text-[#9DB4AC] uppercase tracking-widest mb-1">Profissional</p>
           <div className="space-y-1">
             {PROFISSIONAL_ITEMS.map((item) => <NavItem key={item.href} {...item} />)}
           </div>
         </div>
       </nav>
 
-      <div className="px-3 pb-4 border-t border-gray-100 pt-3">
+      <div className="px-3 pb-4 border-t border-[#3D5751] pt-3">
         <NavItem href="/settings" label="Configurações" icon={Settings} />
       </div>
     </aside>

@@ -1,11 +1,24 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { ClientOnly } from "@/components/ClientOnly";
 import { AppShell } from "@/components/layout/AppShell";
 import { InitDb } from "@/components/InitDb";
 
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Planner da Amanda",
+  title: "Roasted Peach",
   description: "Planejador pessoal inteligente — agenda, pendências e metas",
   manifest: "/manifest.json",
   appleWebApp: {
@@ -17,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#8B5CF6",
+  themeColor: "#DAA38F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -26,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
+    <html lang="pt-BR" className={`${fraunces.variable} ${inter.variable} h-full antialiased`}>
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>

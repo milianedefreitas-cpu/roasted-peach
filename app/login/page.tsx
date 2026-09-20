@@ -40,7 +40,7 @@ export default function LoginPage() {
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg mx-auto mb-4">
             <Sparkles size={30} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Planner da Amanda</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Roasted Peach</h1>
           <p className="text-sm text-gray-500 mt-2">Seu organizador pessoal</p>
         </div>
 

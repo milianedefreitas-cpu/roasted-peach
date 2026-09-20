@@ -6,7 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import type { EventInput, EventClickArg, EventDropArg } from "@fullcalendar/core";
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { ChevronLeft, ChevronRight, CalendarDays, RefreshCw } from "lucide-react";
 import { useTasks } from "@/lib/hooks/useTasks";
 import { CATEGORY_CONFIG } from "@/lib/constants/categories";
 import { format } from "date-fns";
@@ -30,6 +30,14 @@ function taskToEvent(task: Task): EventInput {
 
 type ViewType = "dayGridMonth" | "timeGridWeek" | "timeGridDay";
 
+interface GoogleEvent {
+  id: string;
+  title: string;
+  start: string;
+  end?: string;
+  allDay: boolean;
+}
+
 interface CalendarViewProps {
   onEventClick?: (taskId: number) => void;
   onDateClick?: (date: string, time?: string) => void;
@@ -40,6 +48,19 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
   const { tasks, moveTask } = useTasks();
   const [view, setView] = useState<ViewType>("timeGridWeek");
   const [title, setTitle] = useState("");
+  const [googleEvents, setGoogleEvents] = useState<GoogleEvent[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function refreshGoogle() {
+    setRefreshing(true);
+    try {
+      const r = await fetch("/api/google/calendar");
+      const d = r.ok ? await r.json() : { events: [] };
+      setGoogleEvents(d.events ?? []);
+    } catch {} finally {
+      setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -50,7 +71,35 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const events: EventInput[] = (tasks ?? []).filter((t) => t.showInCalendar !== false).map(taskToEvent);
+  useEffect(() => {
+    let active = true;
+    async function load() {
+      try {
+        const r = await fetch("/api/google/calendar");
+        const d = r.ok ? await r.json() : { events: [] };
+        if (active) setGoogleEvents(d.events ?? []);
+      } catch {}
+    }
+    load();
+    const timer = setInterval(load, 5 * 60 * 1000);
+    return () => { active = false; clearInterval(timer); };
+  }, []);
+
+  const events: EventInput[] = [
+    ...(tasks ?? []).filter((t) => t.showInCalendar !== false).map(taskToEvent),
+    ...googleEvents.map((e): EventInput => ({
+      id: `g-${e.id}`,
+      title: e.title,
+      start: e.start,
+      end: e.end,
+      allDay: e.allDay,
+      backgroundColor: "#92ADA4",
+      borderColor: "#92ADA4",
+      textColor: "#2F2925",
+      editable: false,
+      extendedProps: { google: true },
+    })),
+  ];
 
   function navigate(dir: "prev" | "next" | "today") {
     const api = calRef.current?.getApi();
@@ -67,6 +116,7 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
   }
 
   function handleEventClick(arg: EventClickArg) {
+    if (arg.event.extendedProps.google) return;
     const taskId = Number(arg.event.extendedProps.taskId);
     onEventClick?.(taskId);
   }
@@ -78,6 +128,7 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
   }
 
   async function handleEventDrop(arg: EventDropArg) {
+    if (arg.event.extendedProps.google) return;
     const taskId = Number(arg.event.extendedProps.taskId);
     const newDate = format(arg.event.start!, "yyyy-MM-dd");
     const newStart = arg.event.start ? format(arg.event.start, "HH:mm") : undefined;
@@ -104,6 +155,14 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
           </button>
           <button onClick={() => navigate("next")} className="p-2 rounded-xl hover:bg-gray-100 text-gray-500 transition-colors">
             <ChevronRight size={18} />
+          </button>
+          <button
+            onClick={refreshGoogle}
+            disabled={refreshing}
+            title="Atualizar eventos do Google"
+            className="p-2 rounded-xl hover:bg-gray-100 text-gray-500 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw size={16} className={refreshing ? "animate-spin" : ""} />
           </button>
         </div>
 

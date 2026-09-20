@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Cloud } from "lucide-react";
+import { GoogleIntegrations } from "@/components/settings/GoogleIntegrations";
 
 function ConfirmModal({ title, description, onConfirm, onCancel, loading }: {
   title: string;
@@ -198,6 +199,8 @@ export default function SettingsPage() {
         />
       )}
 
+      <GoogleIntegrations />
+
       <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
 
         <div className="px-5 py-4">
@@ -206,7 +209,7 @@ export default function SettingsPage() {
               <Info size={18} className="text-purple-500" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">Planner da Amanda</p>
+              <p className="text-sm font-semibold text-gray-900">Roasted Peach</p>
               <p className="text-xs text-gray-400">Versão 2.0 — dados na nuvem com Supabase</p>
             </div>
           </div>

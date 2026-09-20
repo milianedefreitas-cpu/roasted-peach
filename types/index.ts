@@ -74,6 +74,11 @@ export type MetaType =
   | "exercicio"
   | "skincare"
   | "leitura"
+  | "prioridades"
+  | "foco"
+  | "movimento"
+  | "conteudo"
+  | "segundo_cerebro"
   | "custom";
 
 export interface Meta {

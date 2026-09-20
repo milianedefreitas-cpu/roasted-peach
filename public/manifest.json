@@ -1,12 +1,12 @@
 {
-  "name": "Planner da Amanda",
+  "name": "Roasted Peach",
   "short_name": "Planner",
   "description": "Planejador pessoal inteligente — agenda, pendências e metas",
   "start_url": "/dashboard",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#f8f7ff",
-  "theme_color": "#8B5CF6",
+  "background_color": "#FED8A6",
+  "theme_color": "#DAA38F",
   "categories": ["productivity", "lifestyle"],
   "icons": [
     {

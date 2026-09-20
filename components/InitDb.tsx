@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase/client";
 
 const DEFAULT_METAS = [
-  { type: "devocional", label: "Devocional",  icon: "BookOpen",  color: "#A78BFA", is_active: true, order: 0 },
-  { type: "agua",       label: "Beber água",   icon: "Droplets",  color: "#3B82F6", is_active: true, order: 1, target: 8, target_unit: "copos" },
-  { type: "dieta",      label: "Dieta",        icon: "Apple",     color: "#22C55E", is_active: true, order: 2 },
-  { type: "exercicio",  label: "Exercício",    icon: "Dumbbell",  color: "#F97316", is_active: true, order: 3 },
-  { type: "creatina",   label: "Creatina",     icon: "Zap",       color: "#EC4899", is_active: true, order: 4 },
-  { type: "whey",       label: "Whey",         icon: "Zap",       color: "#F97316", is_active: true, order: 5 },
+  { type: "prioridades",     label: "3 prioridades",  icon: "ListChecks", color: "#DAA38F", is_active: true, order: 0 },
+  { type: "foco",            label: "Bloco de foco",   icon: "Focus",     color: "#9B7D61", is_active: true, order: 1 },
+  { type: "movimento",       label: "Movimento",       icon: "Move",      color: "#92ADA4", is_active: true, order: 2 },
+  { type: "conteudo",        label: "Conteúdo",        icon: "PenLine",   color: "#DAA38F", is_active: true, order: 3 },
+  { type: "segundo_cerebro", label: "Segundo cérebro", icon: "Brain",     color: "#9B7D61", is_active: true, order: 4 },
+  { type: "agua",            label: "Beber água",      icon: "Droplets",  color: "#92ADA4", is_active: true, order: 5, target: 8, target_unit: "copos" },
 ];
 
 export function InitDb() {

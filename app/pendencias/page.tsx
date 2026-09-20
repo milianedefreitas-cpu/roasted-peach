@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Search, Clock, Zap, GripVertical } from "lucide-react";
+import { Plus, Search, Clock, Zap, GripVertical, Mail, X } from "lucide-react";
 import {
   DndContext,
   DragEndEvent,
@@ -21,6 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { usePendencias } from "@/lib/hooks/usePendencias";
 import { PendenciaCard } from "@/components/pendencias/PendenciaCard";
 import { PendenciaFormModal } from "@/components/pendencias/PendenciaFormModal";
+import { GmailImportModal } from "@/components/pendencias/GmailImportModal";
 import { TaskFormModal } from "@/components/tasks/TaskFormModal";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -81,8 +82,9 @@ export default function PendenciasPage() {
   const [taskModalOpen, setTaskModalOpen] = useState(false);
   const [editPendenciaId, setEditPendenciaId] = useState<number | null>(null);
   const [scheduleFromPendenciaId, setScheduleFromPendenciaId] = useState<number | null>(null);
+  const [gmailOpen, setGmailOpen] = useState(false);
 
-  const { pendencias, reorderPendencias } = usePendencias({
+  const { pendencias, createPendencia, reorderPendencias } = usePendencias({
     status: filterStatus !== "all" ? filterStatus : undefined,
     category: filterCategory !== "all" ? filterCategory : undefined,
   });
@@ -115,9 +117,14 @@ export default function PendenciasPage() {
     <div className="max-w-2xl mx-auto space-y-4 py-2">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900 md:block hidden">Pendências</h1>
-        <Button onClick={() => { setEditPendenciaId(null); setPendenciaModalOpen(true); }} size="sm" className="ml-auto">
-          <Plus size={16} /> Nova pendência
-        </Button>
+        <div className="ml-auto flex items-center gap-2">
+          <Button onClick={() => setGmailOpen(true)} size="sm" variant="secondary">
+            <Mail size={16} /> Gmail
+          </Button>
+          <Button onClick={() => { setEditPendenciaId(null); setPendenciaModalOpen(true); }} size="sm">
+            <Plus size={16} /> Nova pendência
+          </Button>
+        </div>
       </div>
 
       {/* Summary pills */}
@@ -233,6 +240,21 @@ export default function PendenciasPage() {
         isOpen={pendenciaModalOpen}
         onClose={() => { setPendenciaModalOpen(false); setEditPendenciaId(null); }}
         pendenciaId={editPendenciaId}
+      />
+
+      <GmailImportModal
+        isOpen={gmailOpen}
+        onClose={() => setGmailOpen(false)}
+        onImport={async (email) => {
+          await createPendencia({
+            title: email.subject,
+            description: `De: ${email.from}\n\n${email.snippet}`,
+            estimatedMinutes: 30,
+            category: "Pessoal",
+            priority: "Média",
+            status: "Aberta",
+          });
+        }}
       />
 
       <TaskFormModal

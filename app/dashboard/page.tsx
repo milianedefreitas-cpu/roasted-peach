@@ -41,33 +41,35 @@ export default function DashboardPage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6 py-2">
       {/* Hero greeting */}
-      <div className="bg-gradient-to-br from-purple-600 to-violet-700 rounded-3xl p-6 text-white shadow-lg">
-        <p className="text-purple-200 text-sm font-medium mb-1 capitalize">{formatDateLong(today)}</p>
-        <h1 className="text-2xl font-bold mb-4">{(() => { const h = new Date().getHours(); return h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite"; })()}, Amanda! ✨</h1>
+      <div className="bg-[#30443F] rounded-3xl p-6 shadow-md">
+        <p className="text-sm font-medium mb-1 capitalize text-[#9DB4AC]">{formatDateLong(today)}</p>
+        <h1 className="text-3xl font-bold mb-4 text-white font-display">
+          {(() => { const h = new Date().getHours(); return h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite"; })()}! ✨
+        </h1>
 
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-white/15 rounded-2xl p-3 text-center">
-            <p className="text-2xl font-bold">{activeTasks.length}</p>
-            <p className="text-xs text-purple-100 mt-0.5">Tarefas hoje</p>
+          <div className="rounded-2xl p-3 text-center" style={{ background: "rgba(255,255,255,.08)" }}>
+            <p className="text-2xl font-bold text-[#FED8A6]">{activeTasks.length}</p>
+            <p className="text-xs mt-0.5 text-[#C9D6D0]">Tarefas hoje</p>
           </div>
-          <div className="bg-white/15 rounded-2xl p-3 text-center">
-            <p className="text-2xl font-bold">{pendencias.length}</p>
-            <p className="text-xs text-purple-100 mt-0.5">Pendências</p>
+          <div className="rounded-2xl p-3 text-center" style={{ background: "rgba(255,255,255,.08)" }}>
+            <p className="text-2xl font-bold text-[#FED8A6]">{pendencias.length}</p>
+            <p className="text-xs mt-0.5 text-[#C9D6D0]">Pendências</p>
           </div>
-          <div className="bg-white/15 rounded-2xl p-3 text-center">
-            <p className="text-2xl font-bold">{metasDone}/{metas.length}</p>
-            <p className="text-xs text-purple-100 mt-0.5">Metas</p>
+          <div className="rounded-2xl p-3 text-center" style={{ background: "rgba(255,255,255,.08)" }}>
+            <p className="text-2xl font-bold text-[#FED8A6]">{metasDone}/{metas.length}</p>
+            <p className="text-xs mt-0.5 text-[#C9D6D0]">Metas</p>
           </div>
         </div>
 
         {activeTasks.length > 0 && (
           <div className="mt-4">
-            <div className="flex justify-between text-xs text-purple-200 mb-1">
+            <div className="flex justify-between text-xs mb-1 text-[#C9D6D0]">
               <span>Progresso do dia</span>
               <span>{completionRate}%</span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-              <div className="h-full bg-white rounded-full transition-all duration-500" style={{ width: `${completionRate}%` }} />
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,.12)" }}>
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${completionRate}%`, background: "#DAA38F" }} />
             </div>
           </div>
         )}

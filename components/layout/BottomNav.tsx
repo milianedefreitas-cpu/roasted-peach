@@ -65,7 +65,7 @@ export function BottomNav() {
         </div>
       )}
 
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-100 safe-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#30443F] border-t border-[#3D5751] safe-bottom">
         <div className="flex items-center justify-around h-16">
           {PRIMARY_ITEMS.map(({ href, label, icon: Icon }) => {
             const active = pathname.startsWith(href);
@@ -76,7 +76,7 @@ export function BottomNav() {
                 href={href}
                 className={cn(
                   "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-xl transition-all relative",
-                  active ? "text-purple-600" : "text-gray-400"
+                  active ? "text-[#FED8A6]" : "text-[#9DB4AC]"
                 )}
               >
                 <div className="relative">
@@ -87,8 +87,8 @@ export function BottomNav() {
                     </span>
                   )}
                 </div>
-                <span className={cn("text-[10px] font-medium", active ? "text-purple-600" : "text-gray-400")}>{label}</span>
-                {active && <span className="w-1 h-1 rounded-full bg-purple-600 mt-0.5" />}
+                <span className={cn("text-[10px] font-medium", active ? "text-[#FED8A6]" : "text-[#9DB4AC]")}>{label}</span>
+                {active && <span className="w-1 h-1 rounded-full bg-[#DAA38F] mt-0.5" />}
               </Link>
             );
           })}
@@ -97,12 +97,12 @@ export function BottomNav() {
             onClick={() => setShowExtra(!showExtra)}
             className={cn(
               "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-xl transition-all",
-              isExtraActive || showExtra ? "text-purple-600" : "text-gray-400"
+              isExtraActive || showExtra ? "text-[#FED8A6]" : "text-[#9DB4AC]"
             )}
           >
             {showExtra ? <X size={22} /> : <Menu size={22} strokeWidth={1.75} />}
-            <span className={cn("text-[10px] font-medium", isExtraActive || showExtra ? "text-purple-600" : "text-gray-400")}>Mais</span>
-            {isExtraActive && <span className="w-1 h-1 rounded-full bg-purple-600 mt-0.5" />}
+            <span className={cn("text-[10px] font-medium", isExtraActive || showExtra ? "text-[#FED8A6]" : "text-[#9DB4AC]")}>Mais</span>
+            {isExtraActive && <span className="w-1 h-1 rounded-full bg-[#DAA38F] mt-0.5" />}
           </button>
         </div>
       </nav>
