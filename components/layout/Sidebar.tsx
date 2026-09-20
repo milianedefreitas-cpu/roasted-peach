@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, CalendarDays, CheckSquare, Clock, Target, Settings, Sparkles,
-  Lightbulb, BookMarked, Briefcase, HeartPulse, Bot,
+  Lightbulb, BookMarked, Briefcase, HeartPulse, Bot, Inbox,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
@@ -13,6 +13,7 @@ const CORE_ITEMS = [
   { href: "/calendar",   label: "Calendário", icon: CalendarDays },
   { href: "/tasks",      label: "Tarefas",    icon: CheckSquare },
   { href: "/pendencias", label: "Pendências", icon: Clock },
+  { href: "/inbox",      label: "Inbox",      icon: Inbox },
   { href: "/metas",      label: "Metas do Dia",icon: Target },
 ];
 

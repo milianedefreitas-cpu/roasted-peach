@@ -36,6 +36,8 @@ interface GoogleEvent {
   start: string;
   end?: string;
   allDay: boolean;
+  calendar?: string;
+  color?: string;
 }
 
 interface CalendarViewProps {
@@ -93,8 +95,8 @@ export function CalendarView({ onEventClick, onDateClick }: CalendarViewProps) {
       start: e.start,
       end: e.end,
       allDay: e.allDay,
-      backgroundColor: "#92ADA4",
-      borderColor: "#92ADA4",
+      backgroundColor: e.color ?? "#92ADA4",
+      borderColor: e.color ?? "#92ADA4",
       textColor: "#2F2925",
       editable: false,
       extendedProps: { google: true },

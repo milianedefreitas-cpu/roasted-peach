@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, CalendarDays, CheckSquare, Clock, Target,
-  Menu, X, Lightbulb, BookMarked, Briefcase, HeartPulse, Bot,
+  Menu, X, Lightbulb, BookMarked, Briefcase, HeartPulse, Bot, Inbox,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { usePendencias } from "@/lib/hooks/usePendencias";
@@ -23,6 +23,7 @@ const EXTRA_ITEMS = [
   { href: "/insights",     label: "Insights",     icon: Lightbulb },
   { href: "/estudos",      label: "Estudos",      icon: BookMarked },
   { href: "/dieta",        label: "Saúde",        icon: HeartPulse },
+  { href: "/inbox",        label: "Inbox",        icon: Inbox },
   { href: "/profissional", label: "Profissional", icon: Briefcase },
 ];
 

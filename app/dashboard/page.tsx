@@ -21,6 +21,8 @@ interface GoogleEvent {
   start: string;
   end?: string;
   allDay: boolean;
+  calendar?: string;
+  color?: string;
 }
 
 export default function DashboardPage() {
