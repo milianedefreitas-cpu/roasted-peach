@@ -11,8 +11,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/metas":          "Metas do Dia",
   "/insights":       "Insights",
   "/estudos":        "Estudos",
-  "/dieta":          "Dieta",
-  "/espiritualidade":"Espiritualidade",
+  "/dieta":          "Saúde",
   "/profissional":   "Área Profissional",
   "/settings":       "Configurações",
 };

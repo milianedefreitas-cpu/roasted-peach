@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, CalendarDays, CheckSquare, Clock, Target,
-  Menu, X, Lightbulb, BookMarked, Briefcase, BookHeart, Salad, Bot,
+  Menu, X, Lightbulb, BookMarked, Briefcase, HeartPulse, Bot,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { usePendencias } from "@/lib/hooks/usePendencias";
@@ -19,12 +19,11 @@ const PRIMARY_ITEMS = [
 ];
 
 const EXTRA_ITEMS = [
-  { href: "/coach",           label: "Coach IA",        icon: Bot },
-  { href: "/insights",        label: "Insights",       icon: Lightbulb },
-  { href: "/estudos",         label: "Estudos",         icon: BookMarked },
-  { href: "/dieta",           label: "Dieta",           icon: Salad },
-  { href: "/profissional",    label: "Profissional",    icon: Briefcase },
-  { href: "/espiritualidade", label: "Espiritualidade", icon: BookHeart },
+  { href: "/coach",        label: "Coach IA",     icon: Bot },
+  { href: "/insights",     label: "Insights",     icon: Lightbulb },
+  { href: "/estudos",      label: "Estudos",      icon: BookMarked },
+  { href: "/dieta",        label: "Saúde",        icon: HeartPulse },
+  { href: "/profissional", label: "Profissional", icon: Briefcase },
 ];
 
 export function BottomNav() {

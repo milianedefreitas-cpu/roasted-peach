@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Target, Clock, CalendarDays, TrendingUp, Zap } from "lucide-react";
 import { useTasks } from "@/lib/hooks/useTasks";
 import { usePendencias } from "@/lib/hooks/usePendencias";
@@ -15,6 +15,14 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { todayISO, formatDateLong, formatTime, formatDuration } from "@/lib/utils/date";
 
+interface GoogleEvent {
+  id: string;
+  title: string;
+  start: string;
+  end?: string;
+  allDay: boolean;
+}
+
 export default function DashboardPage() {
   const today = todayISO();
   const { tasks } = useTasks({ date: today });
@@ -28,6 +36,20 @@ export default function DashboardPage() {
   const [editTaskId, setEditTaskId] = useState<number | null>(null);
   const [editPendenciaId, setEditPendenciaId] = useState<number | null>(null);
   const [scheduleFromPendenciaId, setScheduleFromPendenciaId] = useState<number | null>(null);
+  const [googleEvents, setGoogleEvents] = useState<GoogleEvent[]>([]);
+
+  useEffect(() => {
+    fetch("/api/google/calendar?days=1")
+      .then((r) => (r.ok ? r.json() : { events: [] }))
+      .then((d) => {
+        const evs = (d.events ?? []).filter((e: GoogleEvent) => {
+          const start = e.start.slice(0, 10);
+          return start === today;
+        });
+        setGoogleEvents(evs);
+      })
+      .catch(() => {});
+  }, [today]);
 
   const urgentPendencias = pendencias
     .filter((p) => p.priority === "Urgente" || p.priority === "Alta")
@@ -96,6 +118,47 @@ export default function DashboardPage() {
           </span>
         </Button>
       </div>
+
+      {/* Compromissos do dia (Agenda + Google) */}
+      {(activeTasks.some((t) => t.startTime) || googleEvents.length > 0) && (
+        <section>
+          <div className="flex items-center gap-2 mb-3">
+            <CalendarDays size={16} className="text-[#5F8277]" />
+            <h2 className="text-base font-bold text-gray-900">Agenda de hoje</h2>
+          </div>
+          <div className="bg-white rounded-2xl border border-[#E3D5C6] p-4 space-y-2">
+            {/* Google Calendar */}
+            {googleEvents.map((e) => {
+              const hora = e.allDay ? "Dia todo" : e.start.slice(11, 16);
+              return (
+                <div key={e.id} className="flex items-center gap-3 p-2.5 rounded-xl bg-[#F6FAF8] border border-[#D5E3DE]">
+                  <span className="text-xs font-semibold text-[#5F8277] min-w-[55px]">{hora}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">{e.title}</p>
+                    <span className="text-[10px] text-[#5F8277] font-semibold uppercase tracking-wider">Google Calendar</span>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Tarefas com horário */}
+            {activeTasks
+              .filter((t) => t.startTime)
+              .sort((a, b) => (a.startTime ?? "").localeCompare(b.startTime ?? ""))
+              .map((t) => (
+                <div key={t.id} className="flex items-center gap-3 p-2.5 rounded-xl bg-[#FFFDF9] border border-gray-100">
+                  <span className="text-xs font-semibold text-[#DAA38F] min-w-[55px]">{t.startTime}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-sm font-medium truncate ${t.status === "Concluída" ? "line-through text-gray-400" : "text-gray-900"}`}>
+                      {t.title}
+                    </p>
+                    <span className="text-[10px] text-gray-400">{t.category}</span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </section>
+      )}
 
       {/* Metas do dia */}
       <section>
